@@ -1,0 +1,5 @@
+builder/o
+builder/dl
+builder/buildroot*
+release/
+*.tar.gz
