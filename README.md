@@ -3,18 +3,21 @@
 This repository contains a mini-Buildroot for building U-Boot based image
 loaders for use on:
 
-* Pine64+
+- [Trellis](https://protolux.io/projects/trellis)
+- Pine64+
 
 ## Using the loader
 
-If you only want to use the load, download and untar the latest release from TBD.
+If you only want to use the load, download and untar the latest release from
+TBD.
 
 You will also need `sunxi-fel` v1.4.2 or later. See below for installation
 instructions or go to [sunxi-tools](https://linux-sunxi.org/Sunxi-tools). The
 instructions below expect `sunxi-fel` to be in your `PATH`.
 
 1. Plug the board into your host machine:
-    * Pine64: use the top USB-A port
+   - Trellis: use the device USB-C port
+   - Pine64: use the top USB-A port
 
 2. Power-on your board in FEL mode
 
@@ -31,7 +34,6 @@ instructions below expect `sunxi-fel` to be in your `PATH`.
 > USB Hub or USB-C Docking Station when connecting boards to your machine for
 > programming. USB-A to USB-A cables (and if required, a **_basic_** USB-A to
 > USB-C adapter) will always work.
-
 
 > ⚠️ **MacOS Unrecognized Disk Prompt**: When you run the USB FEL Loaders to
 > connect a board to a Mac, you may get a prompt that looks like this:

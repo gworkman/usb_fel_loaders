@@ -15,6 +15,7 @@ if [ "$#" -ne 1 ]; then
     echo ""
     echo "Example board names:"
     echo ""
+    echo "  trellis"
     echo "  pine64"
     exit 1
 fi

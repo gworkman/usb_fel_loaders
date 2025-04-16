@@ -11,14 +11,19 @@ pine64: builder/configs/pine64_defconfig release/launch.sh
 	mkdir -p release/boards/pine64
 	cp builder/o/pine64/images/u-boot-sunxi-with-spl.bin release/boards/pine64/u-boot-loader.bin
 
+trellis: builder/configs/trellis_defconfig release/launch.sh
+	cd builder && ./build.sh trellis_defconfig
+	mkdir -p release/boards/trellis
+	cp builder/o/trellis/images/u-boot-sunxi-with-spl.bin release/boards/trellis/u-boot-loader.bin
+
 release/launch.sh: scripts/launch.sh
 	mkdir -p release
 	cp $< $@
 
-$(ARCHIVE): pine64
+$(ARCHIVE): pine64 trellis
 	tar --transform 's,^release,$(ARCHIVE_NAME),' -czf $@ release
 
 clean:
 	rm -rf builder/o release $(ARCHIVE)
 
-.PHONY: all clean pine64 
+.PHONY: all clean pine64 trellis
