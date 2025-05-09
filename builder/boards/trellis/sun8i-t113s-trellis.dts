@@ -18,7 +18,7 @@
 	};
 
 	chosen {
-		stdout-path = "serial3:115200n8";
+		stdout-path = "serial4:115200n8";
 	};
 
 	leds {
@@ -27,19 +27,13 @@
 		led-0 {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_STATUS;
-			gpios = <&pio 6 14 GPIO_ACTIVE_LOW>; /* PG14 */
+			gpios = <&pio 3 18 GPIO_ACTIVE_LOW>; /* PD18 */
 		};
 
 		led-1 {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_STATUS;
-			gpios = <&pio 4 9 GPIO_ACTIVE_LOW>; /* PE9 */
-		};
-
-		led-2 {
-			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_STATUS;
-			gpios = <&pio 4 8 GPIO_ACTIVE_LOW>; /* PE8 */
+			gpios = <&pio 3 17 GPIO_ACTIVE_LOW>; /* PD17 */
 		};
 	};
 
@@ -52,7 +46,7 @@
 		regulator-always-on;
 	};
 
-	/* SY8008 DC/DC regulator on the board */
+	/* DC/DC regulator on the board */
 	reg_3v3: regulator-3v3 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc-3v3";
@@ -61,7 +55,7 @@
 		vin-supply = <&reg_vcc5v>;
 	};
 
-	/* SY8008 DC/DC regulator on the board, also supplying VDD-SYS */
+	/* DC/DC regulator on the board, also supplying VDD-SYS */
 	reg_vcc_core: regulator-core {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc-core";
@@ -70,12 +64,6 @@
 		vin-supply = <&reg_vcc5v>;
 	};
 
-	/*
-	chg_fast: chg-fast {
-		compatible = "mmc-pwrseq-simple";
-		reset-gpios = <&pio 6 12 GPIO_ACTIVE_LOW>;
-	};
-	*/
 };
 
 &cpu0 {
@@ -110,22 +98,22 @@
 
 &pio {
 	vcc-pb-supply = <&reg_3v3>;
+	vcc-pc-supply = <&reg_3v3>;
 	vcc-pd-supply = <&reg_3v3>;
 	vcc-pe-supply = <&reg_3v3>;
 	vcc-pf-supply = <&reg_3v3>;
 	vcc-pg-supply = <&reg_3v3>;
 
-	/omit-if-no-ref/
-	uart2_pe_pins: uart2-pe-pins {
-		pins = "PE0", "PE1", "PE2", "PE3";
-		function = "uart2";
-	};
+	uart4_pd_pins: uart4-pd-pins {
+        pins = "PD7", "PD8";
+        function = "uart4";
+    };
 };
 
 /* shell */
-&uart3 {
+&uart4 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart3_pb_pins>;
+	pinctrl-0 = <&uart4_pd_pins>;
 	status = "okay";
 };
 
