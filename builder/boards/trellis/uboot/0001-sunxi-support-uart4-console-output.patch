@@ -8,7 +8,7 @@ Subject: [PATCH] sunxi: support uart4 console output
  1 file changed, 4 insertions(+)
 
 diff --git a/arch/arm/mach-sunxi/board.c b/arch/arm/mach-sunxi/board.c
-index 11a49418225..02c7982a830 100644
+index 11a49418225..6b78b8cfe6e 100644
 --- a/arch/arm/mach-sunxi/board.c
 +++ b/arch/arm/mach-sunxi/board.c
 @@ -171,6 +171,10 @@ static int gpio_init(void)
@@ -16,8 +16,8 @@ index 11a49418225..02c7982a830 100644
  	sunxi_gpio_set_cfgpin(SUNXI_GPB(7), 7);
  	sunxi_gpio_set_pull(SUNXI_GPB(7), SUNXI_GPIO_PULL_UP);
 +#elif CONFIG_CONS_INDEX == 5 && defined(CONFIG_MACH_SUN8I_R528)
-+	sunxi_gpio_set_cfgpin(SUNXI_GPD(7), 7);
-+	sunxi_gpio_set_cfgpin(SUNXI_GPD(8), 7);
++	sunxi_gpio_set_cfgpin(SUNXI_GPD(7), 5);
++	sunxi_gpio_set_cfgpin(SUNXI_GPD(8), 5);
 +	sunxi_gpio_set_pull(SUNXI_GPD(8), SUNXI_GPIO_PULL_UP);
  #elif CONFIG_CONS_INDEX == 5 && defined(CONFIG_MACH_SUN8I)
  	sunxi_gpio_set_cfgpin(SUNXI_GPL(2), SUN8I_GPL_R_UART);
