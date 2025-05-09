@@ -14,7 +14,7 @@
 	compatible = "protolux,trellis-t113", "allwinner,sun8i-t113s";
 
 	aliases {
-		serial3 = &uart3;
+		serial4 = &uart4;
 	};
 
 	chosen {
