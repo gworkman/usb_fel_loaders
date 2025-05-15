@@ -56,21 +56,22 @@ sudo apt install sunxi-tools
 
 ### MacOS
 
-This will create a `fel` directory and build `sunxi-tools` and its dependencies
-inside it.
+First, install some dependencies with Homebrew:
 
 ```sh
-mkdir fel
-cd fel
-brew install libusb
-git clone https://github.com/dgibson/dtc
-git clone https://github.com/linux-sunxi/sunxi-tools
-make -C dtc libfdt
-CFLAGS="-I$PWD/dtc/libfdt -L$PWD/dtc/libfdt" make -C sunxi-tools
+brew install libusb dtc
 ```
 
-If that worked without errors, then you can either copy `sunxi-tools/sunxi-fel`
-to somewhere in your `$PATH` or use it from that directory.
+Then change to a work directory of your choice to clone and build
+`sunxi-tools`:
+
+```sh
+git clone https://github.com/linux-sunxi/sunxi-tools
+CFLAGS="-I$(brew --prefix dtc)/include" LDFLAGS="-L$(brew --prefix dtc)/lib" make -C sunxi-tools
+```
+
+If that worked without errors, then copy `sunxi-tools/sunxi-fel` to somewhere
+in your `$PATH`.
 
 ## Building from source
 
