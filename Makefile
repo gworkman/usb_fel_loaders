@@ -1,29 +1,25 @@
-# Convenience for testing locally
+# Makefile for usb_fel_loaders
 
 VERSION=$(strip $(shell cat VERSION))
-ARCHIVE_NAME=usb_fel_loaders-$(VERSION)
-ARCHIVE=$(ARCHIVE_NAME).tar.gz
 
-all: $(ARCHIVE)
+all: release/pine64.bin release/trellis.bin release/launch.sh
 
-pine64: builder/configs/pine64_defconfig release/launch.sh
+release/pine64.bin: builder/configs/pine64_defconfig
 	cd builder && ./build.sh pine64_defconfig
-	mkdir -p release/boards/pine64
-	cp builder/o/pine64/images/u-boot-sunxi-with-spl.bin release/boards/pine64/u-boot-loader.bin
+	mkdir -p release
+	cp builder/o/pine64/images/u-boot-sunxi-with-spl.bin $@
 
-trellis: builder/configs/trellis_defconfig release/launch.sh
+release/trellis.bin: builder/configs/trellis_defconfig
 	cd builder && ./build.sh trellis_defconfig
-	mkdir -p release/boards/trellis
-	cp builder/o/trellis/images/u-boot-sunxi-with-spl.bin release/boards/trellis/u-boot-loader.bin
+	mkdir -p release
+	cp builder/o/trellis/images/u-boot-sunxi-with-spl.bin $@
 
 release/launch.sh: scripts/launch.sh
 	mkdir -p release
 	cp $< $@
-
-$(ARCHIVE): pine64 trellis
-	tar --transform 's,^release,$(ARCHIVE_NAME),' -czf $@ release
+	chmod +x $@
 
 clean:
-	rm -rf builder/o release $(ARCHIVE)
+	rm -rf builder/o release
 
-.PHONY: all clean pine64 trellis
+.PHONY: all clean
