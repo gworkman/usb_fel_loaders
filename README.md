@@ -8,24 +8,43 @@ loaders for use on:
 
 ## Using the loader
 
-If you only want to use the load, download and untar the latest release from
-TBD.
+To use the loader, clone this repository and run the `launch.sh` script. The
+script will automatically download the necessary board firmware from GitHub if
+it's not already present locally.
 
-You will also need `sunxi-fel` v1.4.2 or later. See below for installation
+### Prerequisites
+
+You will need `sunxi-fel` v1.4.2 or later. See below for installation
 instructions or go to [sunxi-tools](https://linux-sunxi.org/Sunxi-tools). The
 instructions below expect `sunxi-fel` to be in your `PATH`.
 
-1. Plug the board into your host machine:
-   - Trellis: use the device USB-C port
-   - Pine64: use the top USB-A port
+### Instructions
 
-2. Power-on your board in FEL mode
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/gworkman/usb_fel_loaders
+   cd usb_fel_loaders
+   ```
 
-3. Execute `sunxi-fel <PATH TO UBOOT BIN>`
+2. **Run the launch script** for your specific board:
+   ```sh
+   chmod +x launch.sh
 
-4. Wait a few seconds and the eMMC of the device should show up as a removable
-   storage device. Use `fwup` or `dd` to flash the image and then reset your
-   board.
+   # to upload to a target:
+   ./launch.sh TARGET
+
+   # to list targets:
+   ./launch.sh
+   ```
+
+3. **Connect your board**: Follow the on-screen prompts to place your board in
+   FEL mode and connect it to your machine.
+   - **Trellis**: Use the device USB-C port.
+   - **Pine64**: Use the top USB-A port.
+
+4. **Flash your image**: Once the loader is running, the device's eMMC will
+   appear as a removable USB storage device. Use `fwup`, `dd`, or Etcher to
+   flash your image.
 
 #### Gotchas and Warnings
 
@@ -62,21 +81,19 @@ First, install some dependencies with Homebrew:
 brew install libusb dtc
 ```
 
-Then change to a work directory of your choice to clone and build
-`sunxi-tools`:
+Then change to a work directory of your choice to clone and build `sunxi-tools`:
 
 ```sh
 git clone https://github.com/linux-sunxi/sunxi-tools
 CFLAGS="-I$(brew --prefix dtc)/include" LDFLAGS="-L$(brew --prefix dtc)/lib" make -C sunxi-tools
 ```
 
-If that worked without errors, then copy `sunxi-tools/sunxi-fel` to somewhere
-in your `$PATH`.
+If that worked without errors, then copy `sunxi-tools/sunxi-fel` to somewhere in
+your `$PATH`.
 
 ## Building from source
 
-> NOTE: You may only build this repo on Linux machines with x86_64 or aarch64
-> CPUs
+> NOTE: Building requires a Linux machine (x86_64 or aarch64).
 
 ```sh
 # Build ALL targets
@@ -89,8 +106,10 @@ make pine64
 make clean
 ```
 
-The resulting loader `u-boot-sunxi-with-spl.bin` file will be located inside
-`builder/o/[BOARD_NAME]/output/images`
+The resulting loader binaries will be located in the `release/` directory:
+
+- `release/pine64.bin`
+- `release/trellis.bin`
 
 ## Releasing
 
@@ -112,4 +131,5 @@ git push --tags
 git push
 ```
 
-Then upload the release `tar.gz` to GitHub releases.
+Then create a GitHub Release for the tag and upload the `.bin` files from the
+`release/` directory as individual assets.
