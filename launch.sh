@@ -40,7 +40,7 @@ mkdir -p "$RELEASE_DIR"
 # 3. Auto-download logic if .bin is missing
 if [ ! -f "$UBOOT_LOADER" ]; then
     echo "Board loader '$BOARD_ID.bin' not found locally."
-    
+
     # If VERSION file is missing, we use 'latest'
     RELEASE_TAG="$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null || echo "latest")"
     if [ "$RELEASE_TAG" == "latest" ]; then
@@ -50,7 +50,7 @@ if [ ! -f "$UBOOT_LOADER" ]; then
     fi
 
     echo "Attempting to download from GitHub: $DOWNLOAD_URL"
-    
+
     if command -v curl >/dev/null 2>&1; then
         curl -L "$DOWNLOAD_URL" -o "$UBOOT_LOADER" --fail || { echo "Download failed!"; exit 1; }
     elif command -v wget >/dev/null 2>&1; then
@@ -66,8 +66,6 @@ echo ""
 echo "==========================="
 echo "    USB FEL Loader         "
 echo "==========================="
-echo ""
-echo "[!!] THIS WILL ERASE THE DEVICE'S CURRENT FIRMWARE UPON CONNECTING [!!]"
 echo ""
 echo "Target Board: $BOARD_ID"
 echo ""
@@ -95,7 +93,5 @@ echo "sunxi-fel uboot $UBOOT_LOADER"
 sunxi-fel uboot "$UBOOT_LOADER"
 
 echo ""
-echo "Waiting a moment for the eMMC to be erased..."
-sleep 5
 echo "DONE!"
 echo "Your board should show up as a USB Storage Device in a few seconds..."
